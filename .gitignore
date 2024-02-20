@@ -1,0 +1,9 @@
+# Dependency directories
+node_modules/
+npm-debug.log
+
+# Environment configuration
+.env
+
+# Uploaded images directory
+/images/uploads/

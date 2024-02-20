@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotify Clone</title>
+	<link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body>
+  <div id="main">
+    <div id="left">
+      <a href="/">
+        <i class="ri-home-5-line"></i>
+        <p>Home</p>
+      </a>
+
+      <a href="/search">
+        <i class="ri-search-line"></i>
+        <p>Search</p>
+      </a>
+
+      <a id="list">
+        <i style="border-radius: 50%; border: 2px solid #fff; font-size: 1.6vw; padding: 0 1px;" class="ri-add-line"></i>
+        <p>New Playlist</p>
+      </a>
+
+      <form action="/createplaylist" method="post">
+        <input style="outline: none; border-color: none; margin-left: 6vw; margin-bottom: .3vw; padding: .6vw 0 .6vw .1vw; margin-top: -1vw;" type="text" placeholder="playlist name" name="name" id="input">
+      </form>
+
+      <!-- Playlist list -->
+      <a>
+        <h1  style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; color: aliceblue; font-size: 1.7vw;">
+        All Playlist</h1> 
+      </a>
+
+      <div id="playlistList">
+        <% currentUser.playList.forEach(playlist=> { %>
+          <div class="playlist">
+            <a href="/playlist/<%= playlist._id %>">
+              <p>
+                <%= playlist.name === currentUser.username ? 'Default' : playlist.name %>
+              </p>
+              
+              <!-- Add a delete button for each playlist -->
+              <% if (playlist.name !== currentUser.username) { %>
+                <form action="/deletePlaylist/<%= playlist._id %>" method="post">
+                  <button type="submit"><i style="color: aliceblue; font-size: 1.3vw;" class="ri-delete-bin-line"></i></button>
+                </form>
+                <% } %>
+              </a>
+          </div>
+          <% }); %>
+      </div>
+
+      <a href="/liked">
+        <i style="color: red;" class="ri-heart-fill"></i>
+        <p style="margin-right: 1vw; font-size: 1.5vw;">Liked</p>
+      </a>
+
+      <a style="position: fixed; bottom: 9%; width: fit-content; padding-right: 7vw;" href="/login"><i class="ri-logout-box-line"></i>
+        <p>Logout</p>
+      </a>
+
+      <a  href="/profile">
+         <div id="name" style="margin-left: 1vw;">
+          <div id="prf">
+            <img src="./images/uploads/<%= currentUser.image %>" alt="">
+           </div>
+           <h1 style="color: #fff; font-size: 1.4vw; text-transform: capitalize;font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;"> <%= currentUser.username %></h1>
+         </div>
+        </a>
+
+    </div>
+
+    <div id="right" style="width: 100%;">
+        <form style="display: none;" id="uploadpic" action="/profile" method="post" enctype="multipart/form-data">
+            <input id="fileinp" type="file" name="image" />
+        </form>
+      <div id="prof">
+          <div id="img">
+              <img src="./images/uploads/<%= currentUser.image %>" alt="">
+                <div class="pencil"><i class="ri-pencil-line" style="font-size: 3vw;"></i>Choose photo</div>
+         </div>
+            <div id="data">
+                <h5 style="font-size: 1.3vw; font-weight: 400;">Profile</h5>
+               <a href="/edit" style="text-decoration: none; color: #fff; position: relative;">
+                <button id="det">Edit Details</button>
+                <h1 style="text-transform: capitalize; font-size: 10vw; letter-spacing: -.3vw; margin-top: -2vw;"><%= currentUser.username %></h1>
+               </a>
+                <h2 style="font-weight: 400; margin-top: 3vw; margin-left: 3vw; font-size: 1.4vw;"><%= currentUser.playList.length %> Public Playlist</h2>
+            </div>
+    </div>
+  </div>
+
+  <div id="edit">
+    <div id="details">
+        <form style="display: none;" id="uploadpic" action="/profile" method="post" enctype="multipart/form-data">
+            <input id="fileinp" type="file" name="image" />
+        </form>
+        <div id="nav" style="position: absolute; top: 1vw; left: 1vw; display: flex; justify-content: space-between; padding: 0 2vw;width: 100%;">
+            <h1 style="color: #fff; font-size: 1.5vw;">Profile Details</h1> 
+            <a href="/profile" style="text-decoration: none; color: #fff;"><i class="ri-close-fill"></i></a>
+        </div>
+        <div id="prof1">
+          <div id="img1">
+              <img src="./images/uploads/<%= currentUser.image %>" alt="">
+                <div class="pencil"><i class="ri-pencil-line" style="font-size: 3vw;"></i>Choose photo</div>
+         </div>
+                <form action="/update" method="post" id="data1">
+                        <input id="in1" type="text" name="username" value="<%= currentUser.username %>">
+                        <input id="sbm" type="submit" value="Save">
+                </form>
+    </div>
+    <p style="position: absolute; bottom: 2vw; font-size: 1vw; margin-left: 2vw; font-weight: 600;">By proceeding, you agree to give Spotify access to the image you choose to <br> upload. Please make sure you have the right to upload the image.</p>
+    </div>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
+  integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script>
+
+    function songplayed(filename) {
+      document.querySelector('audio').setAttribute('src', `/stream/${filename}`)
+      document.querySelector('audio').play()
+    }
+
+    function songClicked(title, artist, poster) {
+      // Update the displayed song information
+      document.getElementById('selectedPoster').src = '/poster/' + poster;
+      document.getElementById('selectedTitle').innerText = 'Title: ' + title;
+      document.getElementById('selectedArtist').innerText = 'Artist: ' + artist;
+    }
+
+    var input = document.querySelector("#input")
+    var list = document.querySelector("#list")
+    var flag = 0
+
+    list.addEventListener("click", function () {
+      if (flag === 0) {
+        input.style.display = "flex"
+        flag = 1
+      }
+      else {
+        input.style.display = "none"
+        flag = 0
+      }
+    })
+
+    document.querySelectorAll(".pencil")
+      .addEventListener("click", function () {
+        document.querySelectorAll("#fileinp").click();
+      })
+
+    document.querySelectorAll("#fileinp")
+            .addEventListener("change", function () {
+                document.querySelectorAll("#uploadpic").submit();
+    });
+
+  </script>
+</body>
+
+</html>

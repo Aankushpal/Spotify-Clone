@@ -1,0 +1,480 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body{
+  width: 100%;
+  height: 100%;
+}
+
+#main{
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1vw;
+  gap: .7vw;
+  overflow: hidden;
+}
+
+#left{
+  width: 25%;
+  height: 100%;
+  background: #222;
+  border-radius: 1vw;
+  overflow: hidden;
+  padding-top: 3vh;
+}
+
+#left button{
+  display: flex;
+  align-items: center;
+  width: 40%;
+  height: fit-content;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  margin: 1vw 0 1vw 2vw;
+  cursor: pointer;
+}
+
+#left button i{
+  color: #fff;
+  font-weight: 500;
+  margin-right: 2vw;
+  font-size: 2.2vw;
+}
+
+#left button p{
+  color: #fff;
+  font-size: 1.2vw;
+  font-weight: 600;
+}
+
+#left a{
+  display: flex;
+  align-items: top;
+  width: 100%;
+  padding: 1vw;
+  height: fit-content;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  margin: -.2vw 0 -.2vw 2vw;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all ease .2s;
+}
+
+
+#left a:hover{
+  background-color: #ffffff16;
+}
+
+#left  a p{
+  color: #fff;
+  font-size: 1.4vw;
+  font-weight: 500;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#left a i{
+  color: #fff;
+  font-weight: 500;
+  margin-right: 2vw;
+  font-size: 2vw;
+}
+
+#left #input{
+  display: none;
+}
+
+
+#left #selectedSong{
+  width: 18%;
+  height: 17vh;
+  margin-left: .5vw;
+  position: fixed;
+  bottom: 18vh;
+  overflow: hidden;
+  border-radius: 1vw;
+  display: flex;
+  background-color: #00000026;
+}
+
+#selectedSong #img{
+  margin: .2vw;
+  width: 7vw;
+  height: 7vw;
+  overflow: hidden;
+  box-shadow: 10px 20px 40px #000;
+}
+
+#img img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: .5vw;
+}
+
+#selectedSong #title{
+  margin-top: 4vh;
+  margin-left: 1vw;
+}
+
+#selectedSong p{
+  max-width: 8vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #fff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+
+#name{
+  position: fixed;
+  bottom: 4vh;
+  left: 3%;
+  width: 8.5vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#prf{
+  width: 2.4vw;
+  height: 2.4vw;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+#prf img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.playlist{
+  display: flex;
+  align-items: center;
+  height: fit-content;
+  line-height: .1px;
+  width: 100%;
+  overflow: hidden;
+  margin-left: 3vw;
+  transition: all ease .2s;
+}
+
+.playlist a{
+  display: flex;
+  align-items: center;
+  padding: .1vw;
+}
+
+.playlist p{
+  line-height: 0;
+}
+
+#right{
+  width: 75%;
+  height: 100%;
+  overflow-y: auto;
+  white-space: nowrap;
+  background: linear-gradient(to bottom, #333, #111);
+  border-radius: 1vw;
+  display: flex;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+#prof{
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #666, #222);
+  padding: 2vw;
+  display: flex;
+  color: #fff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#prof #img{
+  width: 20vw;
+  height: 20vw;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  margin-top: 3vw;
+  box-shadow: 0px 10px 40px #0000008a;
+}
+
+#prof #img:hover .pencil{
+  display: flex;
+}
+
+#prof #img img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pencil{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  display: none;
+  opacity: 1;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff;
+  background-color: #3333336a;
+}
+
+#data{
+  margin-top: 7vw;
+  margin-left: 4vw;
+}
+
+#data>a:hover #det{
+  opacity: 1;
+}
+
+#det{
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  border: 1px solid #fff;
+  background-color: transparent;
+  color: #fff;
+  opacity: 0;
+  padding: .3vw .5vw;
+}
+
+#edit{
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  background-color: #000000c4;
+  color: #fff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#details{
+  width: 40vw;
+  height: 25vw;
+  border-radius: .5vw;
+  overflow: hidden;
+  position: relative;
+  background-color: #3c3c3c;
+}
+
+#prof1{
+  width: 100%;
+  height: 100%;
+  padding: 2vw;
+  display: flex;
+  color: #fff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#details #img1{
+  width: 13vw;
+  height: 13vw;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  margin-top: 2vw;
+  box-shadow: 0px 10px 40px #0000008a;
+}
+
+#details #img1:hover .pencil{
+  display: flex;
+}
+
+#details #img1 img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#data1{
+  margin-top: 5vw;
+  margin-left: 2vw;
+  display: flex;
+  align-items: end;
+  flex-direction: column;
+}
+
+#data1 #in1{
+  padding: 1vw 5vw 1vw .5vw;
+  margin-bottom: 1vw;
+  background-color: #555;
+  border: 1px solid #999;
+  outline: none;
+  color: #fff;
+  font-size: 1.2vw;
+  border-radius: .5vw;
+}
+
+
+#data1 #sbm{
+  padding: 1.2vw 3vw;
+  border-radius: 30px;
+  border: none;
+  font-weight: 900;
+  font-size: 1.1vw;
+}
+
+.musics{
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13vw, 1fr));
+}
+
+.song{
+  background: linear-gradient(to bottom, transparent, #3c3a3a8c);
+  height: 43vh;
+  width: fit-content;
+  overflow: hidden;
+  padding: 1vw;
+  position: relative;
+  border-radius: .3vw;
+  margin: .3vw;
+  transition: all ease .2s;
+}
+
+.song #play{
+  position: absolute;
+  top: 63%;
+  right: 1vw;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  background-color: #1ed760;
+  padding: 1vw .5vw; 
+  border-radius: 50%;
+  font-size: 1.7vw;
+  opacity: 0;
+  transition: all ease .2s;
+}
+
+.song:hover{
+  background-color: #ffffff23;
+}
+.song:hover #play{
+  opacity: 1;
+  top: 60%;
+}
+
+#like{
+  background-color: transparent;
+  border: none;
+  font-size: 1.8vw;
+}
+
+#unlike{
+  background-color: transparent;
+  border: none;
+  font-size: 1.8vw;
+}
+
+.song .text{
+  width: 100%;
+  height: 25vh;
+  display: flex;
+  text-align: center;
+  justify-content: start;
+  flex-direction: column;
+  line-height: 1.4vh;
+}
+
+.song .text h5,
+.song .text p{
+  max-width: 10vw;
+  font-size: 1.2vw;
+  line-height: 1.4vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #fff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+
+#right .song img,
+.top .song img,
+.right .song img{
+  width: 100%;
+  margin-bottom: .6vh;
+  object-fit: cover;
+  border-radius: .3vw;
+}
+
+#right audio,
+.top audio,
+.right audio{
+  width: 60%;
+  position: fixed;
+  bottom: 3%;
+  color: #fff;
+  left: 30%;
+}
+
+#right audio::-webkit-media-controls-panel,
+.top audio::-webkit-media-controls-panel,
+.right audio::-webkit-media-controls-panel{
+  background-color: #3e902a;
+  color: #fff;
+  /* Add more styles as needed */
+}
+
+#right audio::-webkit-media-controls-volume-slider,
+.top audio::-webkit-media-controls-volume-slider 
+.right audio::-webkit-media-controls-volume-slider{
+  background-color: #3e902a;
+  color: #fff;
+  /* Add more styles as needed */
+}
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: none;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-color: #FFF;
+	background-image: -webkit-gradient(linear,
+									   40% 0%,
+									   75% 84%,
+									   from(#4D9C41),
+									   to(#19911D),
+									   color-stop(.6,#54DE5D))
+}
+

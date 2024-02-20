@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Clone</title>
+	<link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="main">
+        <div id="left">
+            <a href="/">
+                <i class="ri-home-5-line"></i>
+                <p>Home</p>
+            </a>
+
+            <a href="/search">
+                <i class="ri-search-line"></i>
+                <p>Search</p>
+              </a>
+
+            <a id="list">
+                <i style="border-radius: 50%; border: 2px solid #fff; font-size: 1.6vw; padding: 0 1px;" class="ri-add-line"></i>
+                <p>New Playlist</p>
+            </a>
+                      
+            <button style="display: flex; flex-direction: column;">
+                <p style="text-transform: uppercase; display: block; "><%= playlist.name %> </p>
+                 <input id="myInput"
+                     style="padding: .6vw; border-radius: 5px; outline: none; border-color: none; width: 13vw; margin-left: 10vw;"
+                     type="text" placeholder="search songs">
+             </button>
+
+             <a href="/liked" style="margin-top: 4vw;">
+                 <i style="color: red;" class="ri-heart-fill"></i>
+                <p style="margin-right: 1vw; font-size: 1.5vw; ">Liked</p>
+              </a>
+
+              <a style="position: fixed; bottom: 9%; width: fit-content; padding-right: 7vw;" href="/login"><i class="ri-logout-box-line"></i>
+                <p>Logout</p>
+              </a>
+
+        </div>
+
+        <div id="right" style="width: 100%;">
+            <div class="musics">
+                <% if (playlist.songs.length> 0) { %>
+                    <% playlist.songs.forEach(song=> { %>
+                        <div class="song"
+                            onclick="songplayed('<%= song.fileName %>')">
+                            <img src="/poster/<%= song.poster %>" alt="">
+                            <div class="text">
+                                <h5><%= song.title %></h5>
+                                <p><%= song.artist %></p>
+                                <p><%= song.album %></p>
+                                <i id="play" class="ri-play-mini-fill"></i>
+                                <form action="/playlist/<%= playlist._id %>/removeSong/<%= song._id %>" method="post">
+                                    <% if(song.playlistadd){ %>
+                                        <button type="submit">Add from Playlist</button>
+                                    <% } else{ %>
+                                        <button type="submit" 
+                                        style=" border: none;  font-size: 1.2vw; border-radius: 3px; margin-left: 10vw;"><i class="ri-close-fill"></i></button>
+                                    <% } %>
+                                </form>
+                            </div>
+                        </div>
+                        <% }); %>
+                            <% } else { %>
+                                <p style="color: #fff; font-family: gilroy; margin: 1vw;">No songs in the playlist.</p>
+                                <% } %>
+            </div>
+            <audio src="/stream/<% playlist %>" controls></audio>
+        </div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"
+        integrity="sha512-emSwuKiMyYedRwflbZB2ghzX8Cw8fmNVgZ6yQNNXXagFzFOaQmbvQ1vmDkddHjm5AITcBIZfC7k4ShQSjgPAmQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+
+        async function searchSong() {
+            const result = await axios.post('/search', {
+                search: document.querySelector('input').value
+            })
+
+            let clutter = ''
+
+            result.data.songs.forEach(song => {
+                clutter += ` <div class="song" onclick="songplayed('${song.fileName}'), songClicked('${song.title}', ' ${song.artist} ', ' ${song.poster}')">
+                <img src="/poster/${song.poster}" alt="">
+                <div class="text">
+                  <h5>${song.title}</h5>
+                  <p> ${song.artist}</p>
+                  <form action="/playlist/<%= playlist._id %>/addSong/${song._id}" method="post">
+                    <button type="submit">Add to Playlist</button>
+                  </form>
+                </div>
+              </div>`
+            });
+
+            document.querySelector('.musics').innerHTML = clutter
+
+        }
+
+        function songplayed(filename) {
+            document.querySelector('audio').setAttribute('src', `/stream/${filename}`)
+            document.querySelector('audio').play()
+        }
+
+        // From here the code is starting for search song without using any buttons
+        const input = document.getElementById('myInput');
+
+        // Function to submit the form
+        const submitForm = () => {
+            const inputValue = input.value.trim();
+
+            // Send the input value to the server using a simple XMLHttpRequest
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/submit', true);
+            xhr.send(JSON.stringify({ inputValue }));
+
+            // Clear the input field if needed
+            // input.value = '';
+        };
+
+        // Submit the form when the Enter key is pressed
+        input.addEventListener('keyup', function (event) {
+            if (event.key === 'Enter') {
+                submitForm();
+                searchSong();
+            }
+        });
+
+    </script>
+</body>
+
+</html>
